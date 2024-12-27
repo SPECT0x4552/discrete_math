@@ -1,0 +1,765 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[estonian]{babel}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{xparse}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+\babelprovide[hyphenrules=estonian]{estonian}
+\sloppy
+
+% Page layout
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\newtcolorbox{highlightbox}{
+    colback=blue!10!white, % Light blue background
+    colframe=blue!50!black, % Dark blue frame
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    breakable, % Allows page breaks
+    before skip=10pt,
+    after skip=10pt
+}
+
+\newtcolorbox{notabenebox}[1][]{
+  enhanced, % Enable advanced features
+  breakable, % Allow the box to break across pages
+  colframe=orange, % Frame color
+  colback=orange!10, % Background color
+  boxrule=1.5pt, % Thicker frame
+  arc=4pt, % Rounded corners
+  frame code={
+    \fill[orange] (frame.south west) rectangle ([xshift=6pt]frame.north west); % Fill on the left side
+    \draw[orange, line width=1.5pt] (frame.south west) -- (frame.north west); % Vertical line
+  },
+  fonttitle=\bfseries, % Bold title font
+  title={\textbf{NB! \quad \\}}, % Add a title
+  attach title to upper, % Place the title inside the box
+  before skip=10pt, % Space before the box
+  after skip=15pt, % Space after the box
+  coltitle=black,
+  #1 % Allow additional options to be passed
+}
+
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Diskreetne Matemaatika}
+\fancyhead[R]{IAX0010}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt} % Adjust header height
+
+% Section formatting
+\titleformat{\section}{\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{1em}{}
+
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+
+\NewDocumentCommand{\nb}{O{} m}{
+  \begin{notabenebox}[#1]#2\end{notabenebox}%
+}
+
+\newcommand{\hl}[1]{\begin{highlightbox}#1\end{highlightbox}} 
+
+\makeatletter
+% Define lisamarkused command
+\newcommand{\lisamarkused}[1]{\def\@lisamarkused{#1}}
+
+\newcommand {\lm}{\lisamarkused}
+% Question environment
+\newenvironment{question}[1]{%
+  \item \textbf{#1} \vspace{0.5em} \\ % The question text
+  \textbf{Vastus:} \vspace{0.25em} \\ % Automatically adds "Vastus:"
+  \def\@lisamarkused{} % Initialize lisamarkused as empty
+}{%
+  \if\relax\detokenize\expandafter{\@lisamarkused}\relax % If no content, do nothing
+  \else
+    \vspace{0.5em} % Add space before "Lisamärkused:"
+    \textbf{Lisamärkused:} \\ % Add "Lisamärkused:" if content exists
+    \@lisamarkused % Display content under Lisamärkused
+  \fi
+  \vspace{1em} % Add spacing after question block
+}
+\makeatother
+
+\begin{document}
+
+\section*{Kordamisküsimused}
+
+\begin{enumerate}[left=0pt]
+
+\begin{question}{Millise matemaatikavaldkonnaga Diskreetne Matemaatika ei tegele?}
+Diskreetne matemaatika ei tegele pideva matemaatikaga ehk matemaatilise analüüsiga, diferentsiaal- ja integraalarvutustega jm.
+
+\lisamarkused{Pidevate funktsioonide argumentideks on reaalarvud, ehk \textit{pidev matemaatika} on reaalarvude matemaatika.}
+\end{question}
+
+\begin{question}{Milliste arvudega Diskreetne Matemaatika ei tegele?}
+Diskreetne matemaatika ei tegele reaalarvudega.
+\end{question}
+
+\begin{question}{Milliseid funktsioone nimetatakse pidevateks?}
+Pidevateks funktsioonideks peetakse funktsioone, mille graafik on koordinaatteljestikus esitatav pideva joonena või kõverjoonena.
+\end{question}
+
+\begin{question}{Mis on verbaalne esitus?}
+Verbaalne esitus on mistahes informatsiooni edastamine lingvistilise eneseväljenduse ehk keele abil.
+
+\lisamarkused{Lingvistiline eneseväljendus võib olla nii kirjalik kui ka suuline.}
+\end{question}
+
+\begin{question}{Mis on formaalne esitus?}
+\textit{Formaalne esitus} on mistahes informatsiooni esitamine kokkulepitud sümbolite abil.
+
+\lisamarkused{Mittelingvistiline, ning lisaks on formaalne esitus enamjaolt kirjalikus formaadis.}
+\end{question}
+\newpage
+\begin{question}{Milline omadus peab olema formaalsetel esitustel?}
+  Formaalsel esitusel peab olema üheselt tõlgendatav(loetav) esitusformaat.
+\end{question}
+
+\section*{Lausearvutus ja Matemaatiline Loogika}
+
+\begin{question}{Mis on lausearvutus?}
+  Lausearvutus on loogilise mõtlemise \textit{matemaatiline mudel}.
+
+  \lisamarkused{Lausearvutuse lause võib olla iga verbaalne väide, millele saab omistada tõeväärtuse 0 või 1.}
+\end{question}
+
+\begin{question}{Milline lause on lausearvutuslause?}
+  Lausearvutuslause on väide, mis omandab ühe tõeväärtuse kahest tõeväärtuse alternatiivist (0 või 1).
+
+\end{question}
+
+\begin{question}{Millised tõeväärtused on olemas? Kuidas neid tähistatakse?}
+  Kaks tõeväärtust on olemas : $0$ ja  $1$.
+\end{question}
+
+\begin{question}{Milline lause on lihtlause?}
+  Lihtlause on lause, mida ei saa enam lihtsamateks "alam-lauseteks" jagada.
+
+  \lisamarkused{Ehk tegelikult on tegemist lihtsaimate võimalike lausearvutuslausetega.}
+\end{question}
+
+\begin{question}{Kuidas lausearvutuslauseid tavaliselt tähistatakse?}
+  Lausearvutuslauset tähistatkse tavaliselt suurtähtedega - ${A}, {B}, {P}, {Q} \dots$
+\end{question}
+
+\begin{question}{Mis on liitlause? Kuidas ja millest neid moodustatakse?}
+  Liitlause on lause, mis on tehtud mitmest lihtlausest kasutades kindlaid sidesõnu ja loogilisi konstruktsioone.
+
+  \lisamarkused{Liitlausete koosseisu kuuluvaid lauseid nimetatakse ka \textit{osalauseteks}.}
+\end{question}
+
+\begin{question}{Millised on lausearvutuse loogikatehted? Nende tähistused ja verbaalsed tähendused?}
+  Lausearvutuse loogikatehteid on kahte tüüpi:
+  \begin{itemize}
+    \item Binaarsed loogikatehted (sidumiskonstruktsioonid) - konjunktsioon,\\ disjunktsioon, implikatsioon, ekvivalents  
+    \item Unaarne loogikatehe - inversioon
+  \end{itemize}
+  Tähistused ja verbaalsed esitused:  
+  \begin{itemize}
+    \item $\overline{A}$ - "mitte ${A}$ ; pole õige, et ${A}$"
+    \item ${A} \vee {B}$ - "${A}$ või ${B}$"
+    \item ${A} \wedge {B}$ - "${A}$ ja ${B}$"
+    \item ${A} \leftrightarrow {B}$ - "${A}$ (siis ja) ainult siis kui ${B}$"
+    \item ${A} \rightarrow {B}$ - "${A}$ kehtimisest järeldub ${B}$ kehtimine" / "Kui ${A}$ siis  ${B}$"  
+  \end{itemize}
+\end{question}
+
+\begin{question}{Millist tehet nimetatakse binaarseks? Millised loogikatehetest on binaarsed?}
+  Binaarseks tehteks nimetatakse tehet, mida saab kasutada sidumiskonstruktsiooniga ehk tehe, mille abil saab kaks lauset "kokku siduda". \\
+  \\ Binaarseid loogikatehteid on $4$:
+  \begin{itemize}
+    \item JA-tehe ehk loogiline korrutamine ehk konjunktsioon. 
+    \item VÕI-tehe ehk loogiline liitmine ehk disjunktsioon. 
+    \item Ekvivalentsitehe ehk loogiline samaväärsus ehk ekvivalents. 
+    \item Loogiline järeldamine ehk implikatsioon.
+  \end{itemize}
+\end{question}
+
+\begin{question}{Millist tehet nimetatakse unaarseks? Millised loogikatehetest on unaarsed?}
+  Unaarseks tehteks nimetatakse sellist loogikatehet, mida saab rakendada ainult ühele lausele. \\ 
+  Loogikatehetest unaarne on loogiline eitus ehk inversioon.
+\end{question}
+\newpage 
+\begin{question}{Milline aritmeetiline tehe vastab igale loogikatehtele?}
+  \begin{itemize} 
+    \item Konjunktsioonile vastab aritmeetiline korrutamine. 
+    \item Disjunktsioonile vastab aritmeetiline liitmine. 
+    \item Ekvivalentsile vastab aritmeetikas võrdusmärk.  
+  \end{itemize}
+
+  Implikatsioonile ja inversioonile aritmeetikas analoogtehteid ei ole. 
+\end{question}
+
+
+\begin{question}{Millist loogikatehet nimetatakse loogiliseks korrutamiseks? Millist loogiliseks liitmiseks?}
+  Loogiliseks korrutamiseks nimetatakse \textit{konjunktsiooni}. \\ 
+  Loogiliseks liitmiseks nimetatakse \textit{disjunktsiooni}.
+\end{question}
+
+\begin{question}{Milline omavaheline seos on ekvivalentsil ja implikatsioonil?}
+  Implikatsioonil on operandide staatuseks $\textit{eeldus}$ $\rightarrow$ $\textit{järeldus}$ \\ 
+  Ekvivalentsil on aga mõlemad operandid nii üksteise eelduseks kui ka järelduseks. 
+\end{question}
+
+\begin{question}{Millised on elementaarsed loogikatehted? Miks neid nimetatakse elementaarseteks?}
+  Elementaarsed loogikatehted on konjunktsioon, disjunktsioon ja inversioon, sest 
+  neid ei saa avaldada enam veelgi lihtsamate loogikatehete kaudu.
+
+  \lisamarkused{Mainitud tehted ise ongi kõige lihtsamad loogikatehted - kõik muud loogikatehted on avaldatavad kolme elementaarse loogikatehte kaudu.}
+\end{question}
+\newpage 
+\begin{question}{Mis on lausearvutusvalem? Lausearvutusvalemi definitsioon.}
+  Lausearvutusvalemiks nimetatakse nii liht- kui ka liitlausete \textit{formaalseid esitusi.} \\ 
+ \\ \textbf{Lausearvutusvalemi definitsioon:} \\ 
+ \begin{highlightbox}
+   \begin{itemize} 
+     \item Lihtlause \textit{formaalne tähis} (näiteks ${A}$) ja üksik tõeväärtuskonstant ($0, 1$) on \textbf{valem} 
+     \item Kui ${A}$ on valem, siis on ka valemid $\overline{A}$ ja ${A}$ 
+     \item Kui ${A}$ ja ${B}$ on valemid, siis on valemid ka: 
+       \begin{itemize}
+         \item $A \wedge B$
+         \item $A \vee B$
+         \item $A \rightarrow B$
+         \item $A \leftrightarrow B$
+         \end{itemize}
+   \end{itemize}
+ \end{highlightbox}
+\end{question}
+
+\begin{question}{Lausearvutuses kasutatavate loogikatehete definitsioonid (tõeväärtustabelina).}
+\begin{center}
+\renewcommand{\arraystretch}{1.3} % Slightly less vertical padding
+\setlength{\tabcolsep}{6pt} % Reduced horizontal padding
+\footnotesize % Reduce font size for the table
+\begin{tabular}{|c|c||c|c|c|c|c|}
+\hline
+& & \textbf{Inversioon} & \textbf{Konjunktsioon} & \textbf{Disjunktsioon} & \textbf{Implikatsioon} & \textbf{Ekvivalents} \\ 
+\hline 
+\textbf{A} & \textbf{B} & $\mathbf{\lnot A}$ & $\mathbf{A \land B}$ & $\mathbf{A \lor B}$ & $\mathbf{A \rightarrow B}$ & $\mathbf{A \leftrightarrow B}$ \\
+\hline
+0 & 0 & 1 & 0 & 0 & 1 & 1 \\
+0 & 1 & 1 & 0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+1 & 1 & 0 & 1 & 1 & 1 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+\end{question}
+
+\newpage
+
+\begin{question}{Milline on loogikatehete prioriteedijärjestus? Millal see oluliseks osutub?}
+  Loogikatehete prioriteedijärjestus on järgmine:
+  \be 
+   \item $\neg$
+    \item $\wedge$
+    \item $\vee$
+    \item $\rightarrow$
+    \item $\leftrightarrow$
+  \ee
+  \lm{\textit{Inversioon} teostatakse alati esimesena. \textit{Konjunktsioon} on prioriteetsem kui \textit{disjunktsioon}.}
+\end{question}
+
+\begin{question}{Milline lause on samaselt tõene? Mis on tautoloogia?}
+  Lause on \textit{samaselt tõene} kui ta omandab tõeväärtuse $1$ koostislausete mis tahes väärtuste või väärtuskombinatsioonide korral. \\ 
+  Samaselt tõest lauset nimetatakse ka \textit{tautoloogiaks}. \\ 
+  Näide tautoloogiast: 
+  \hl{$A \vee \overline{A}$}
+
+  \lm{See tähendab seda, et vahet ei ole mis tõeväärtused koostislaused omandavad - lause lõplikuks tõeväärtuseks tuleb siiski $1$.}
+\end{question}
+
+\begin{question}{Milline lause on samaselt väär? Mis on vastuolu?}
+  Lause on \textit{samaselt väär} kui ta omandab tõeväärtuse $0$ koostislausete mis tahes väärtuse või väärtuskombinatsioonide korral. \\ 
+  Samaselt väära lauset nimetatakse ka \textit{vastuoluks}. \\ 
+  Näide vastuolust: 
+  \hl{$A \wedge \overline{A}$}
+\end{question}
+
+\begin{question}{Millega on asendatav samaselt tõene lause ja samaselt väär lause?}
+  Samaselt tõese lause võib asendada konstandiga $1$. \\ 
+  Samaselt väära lause võib asendada konstandiga $0$. 
+\end{question}
+
+\begin{question}{Mis on predikaat?}
+  Predikaat on lause(valem), mis sisaldab ühte või enamat \textit{muutujat}. (\textit{Teisisõnu ka \\  predikaatlause}) 
+\end{question}
+
+\begin{question}{Millal predikaat omandab tõeväärtuse?}
+  Predikaat omandab tõeväärtuse siis, kui predikaadis olevad muutujad konkreetsete väärtustega asendada lubatud väärtustehulgast.
+\end{question}
+
+\begin{question}{Kuidas predikaate ja predikaatmuutujaid tavaliselt tähistatakse?}
+  Predikaate tähistatakse suurtähtedega ning predikaadis sisaldavaid muutujaid väiketähtedega (predikaatmuutujad).
+\end{question}
+
+\begin{question}{Milline predikaat on ühekohaline? Milline on kahekohaline?}
+  Ühekohaline predikaat on ühe muutujaga, näiteks ${P}(x)\equiv\dots$ \\ 
+  Kahekohaline predikaat on kahe muutujaga, näiteks ${P}(x,y) \equiv\dots$
+
+  \lm{Predikaat võib olla esitatud ka verbaalselt ${A}(x) \equiv \textit{$x$ on algarv}$ \\ Kuid üldjuhul eelistame, et predikaatlaused oleks esitatud formaalsel kujul \\ ehk \textit{predikaatvalemina}.} 
+\end{question}
+
+\begin{question}{Kuidas nimetatakse teisiti ühekohalist predikaati?}
+  Ühekohalist predikaati nimetatakse ka \textit{omaduseks}.
+  \hl{Kui predikaatmuutuja mingi konkreetse väärtuse $n$ korral predikaatlause ${P}(n)$ \\ osutub tõeseks, siis ütleme, et "$n$-il on omadus ${P}$".}
+  \textbf{Näide:} \\ 
+  Olgu $x$ täisarv. 
+  \hl{Olgu $x$ täisarv. \\ \\ ${P}(x) \equiv (x > 2) \wedge (x < 4)$ \\ \\ Andes muutujale $x$ väärtuse $3$, saame tõese predikaatlause: \\ \\ ${P}(3) = (3 > 2) \wedge (3 < 4) = 1$}
+\end{question}
+
+\newpage
+
+\begin{question}{Mida näitab predikaadi määramispiirkond?}
+  Predikaadi määramispiirkond näitab ära predikaadile võimalikud omandatavad väärtused.
+\end{question}
+
+\begin{question}{Millal on predikaatlause täidetav ehk kehtestatav?}
+  Predikaatlause on \textit{täidetav} ehk \textit{kehtestatav} juhul kui predikaat on tõene ainult osade muutujaväärtuste korral. 
+
+  \lm{\hl{Predikaatlause on \textbf{samaselt tõene} kui ta on tõene ehk kehtiv terves oma määramispiirkonnas. \\ Predikaatlause on \textbf{samaselt väär} kui ta ei kehte oma määramispiirkonna mitte ühegi muutujaväärtuse korral.}}
+\end{question}
+
+\begin{question}{Millised kvantorid on olemas? Millised on nende tähised?}
+  Kvantoreid kasutatakse selleks, et esitada kompaktsemalt predikaatide kehtivust mingi määramispiirkonna osa piirdes. \\
+Kvantoreid on olemas kahte tüüpi - \textbf{üldsuse kvantor} ja \textbf{eksistentsikvantor}.
+\be 
+ \item Üldsuse kvantor - $\forall$ 
+ \item Eksistentsikvantor - $\exists$
+\ee
+  \textbf{Näide:}  
+  \hl{Kui soovime väita, et predikaat ${P}(x)$ kehtib oma määramispiirkonna  \textbf{kõikide $x$-ide} korral, siis kasutame selleks \textit{üldsuse kvantorit} $\forall$ : \\ \\ $\forall x \textbf{P(x)}$ \\ 
+  \\ Ehk üldkujul $\forall \textbf{x} (\dots mistahes \ lause \ muutuja \ \textbf{x} \  osalusel)$ \\ 
+  \\ Kui aga soovime väita, et predikaat $\textbf{P(x)}$ kehtib \textbf{vähemalt ühe} oma määramispiirkonna muutuja \textbf{x} korral, siis kasutame sellise väite \\ kompaktsemaks esitamiseks 
+  olemasolu kvantorit ehk eksistentsikvantorit $\exists$: \\ 
+  \\ $\exists\textbf{x}\textbf{P(x)}$ \\ 
+  \\ Ehk üldkujul $\forall\textbf{x}(\dots mistahes \ lause \ muutuja \ \textbf{x} \ osalusel)$
+}
+\newpage
+\lm{Kvantorid sobivad predikaadi kehtestatavuse täpsustamiseks \textit{nii lõpliku kui ka lõpmatu määramispiirkonna korral}.}
+\end{question}
+
+\begin{question}{Millise loogikatehte üldistuseks on üldsuse kvantor?} 
+  Üldsuse kvantor on konjunktsiooni üldistuseks. 
+\end{question}
+
+\begin{question}{Millise loogikatehte üldistuseks on eksistentsikvantor?}
+  Eksistentsikvantor on disjunktsiooni üldistuseks.
+\end{question}
+\nb{Kui näiteks predikaadile $\mathbf{P(x)}$ on rakendatud kvantorit, siis omandab ta kohe tõeväärtuse ehk kvantoriga predikaardi tõeväärtus \textit{ei olene} enam predikaatmuutujale $\mathbf{x}$ omistatud väärtusest.\\} 
+\begin{question}{Millist muutujat nimetatakse seotud muutujaks ja millist vabaks muutujaks?}
+Seotud muutujad on muutujad, millel on kvantorit rakendatud. \\ 
+Vabad muutujad on muutujad, mis kvantorimärgiga seotud ei ole. \\ 
+\\ \textbf{Näide:} 
+\hl{$\forall\mathbf{x \ P(x,y)}$ korral on $\mathbf{x}$ \textit{seotud muutuja} ja $\mathbf{y}$ on \textit{vaba muutuja.}}
+\end{question}
+
+\begin{question}{Mida tähendab hüüumärgiga eksistentsikvantor?}
+  Hüüumärgiga eksistentsikvantor ($\mathbf{\exists!x}$) tähendab seda, et seotud muutuja kohta leidub täpselt üks $\textbf{x}\dots$
+\end{question}
+
+\begin{question}{Millal on kaks predikaati võrdväärsed?}
+  Kaks predikaati on võrdsed ehk ekvivalentsed juhul kui nende määramispiirkonnad langevad kokku.
+\end{question}
+\newpage
+\nb{Kvantorid $\forall$ ja $\exists$ on seotud järgneva samaväärsusega: \\ \\ $\forall\mathbf{xP(x)} \equiv \overline{\exists}\mathbf{x} \mathbf{\overline{P}(x)}$ \\ \\ Ehk \textit{mistahes predikaatlause \textbf{P} muutuja $\mathbf{x}$
+osalusel ei leidu predikaadi määramispiirkonnas mitte ühtegi $\mathbf{x}$-i mille korral predikaatlause ei kehtiks.}}
+
+\nb{Kvantoriga võib olla seotud ka mitu muutujat: \\ Järgnevad predikaatvalemid on samaväärsed: \\ \\ $\forall\mathbf{x,y} \ \mathbf{P(x,y)} \equiv \forall\mathbf{x}\forall\mathbf{y} \ \mathbf{P(x,y)}$}
+
+\nb{Ka predikaate saab siduda liitpredikaatideks samade loogikatehetega: \\ \textit{inversioon, konjunktsioon, disjunktsioon, implikatsioon, ekvivalents}.}
+\begin{question}{Mida nimetatakse loogikaseadusteks?}
+  Loogikaseadusteks nimetatakse kuni kolme operandiga lihtsaimaid \textbf{samaselt tõeseid lausearvutusvalemeid} ja samaselt 
+  tõeseid lausearvutusvalemite võrdusi.
+
+  \nb{Loogikaseadused ei ole aksioomid - nende kehtivus tuleneb loogikatehete definitsioonidest.}
+\end{question}
+\newpage
+\begin{question}{Esitada: 1. topelteituse seadus, 2. neeldumisseadused, 3. DeMorgani seadused, 4. välistatud kolmanda seadus, 5. vastuolu seadus, 6. kontrapositsiooni seadus.}
+  \newline  
+  \textbf{1. Topelteituse seadus:}
+  \hl{\[\overline{\overline{A}} = {A}\]} 
+  \leavevmode 
+
+  \textbf{2. Neeldumisseadused: } 
+  \hl{\[ 
+    \begin{align*}  
+    A \wedge (B \vee C) = A 
+    \\ 
+    A \vee (A \wedge B) = A
+  \end{align*}
+  \]}
+  \leavevmode 
+  
+  \textbf{3. DeMorgani seadused: }
+  \hl{
+    \[ 
+    \begin{align*}
+      \overline{A \wedge B} = \overline{A} \vee \overline{B} 
+      \\ 
+      \overline{A \vee B} = \overline{A} \wedge \overline{B}
+    \end{align*}
+    \]
+    \textit{DeMorgani seadused on laiendatavad piiramatult suurele muutujatearvule. \\ 
+    Näide kolme muuutjaga: }
+
+    \[ 
+    \begin{align*}
+      \overline{A \wedge B \wedge C} = \overline{A} \vee \overline{B} \vee \overline{C}
+      \\ 
+      \overline{A \vee B \vee C} = \overline{A} \wedge \overline{B} \wedge \overline{C}
+    \end{align*}
+    \]
+  }
+  \leavevmode 
+
+  \textbf{4. Välistatud kolmanda seadus: } 
+  \hl{\[ 
+    \begin{align*}
+      A \vee \overline{A} = 1
+    \end{align*}
+  \]} 
+\end{question}
+ \leavevmode 
+
+ \textbf{5. Vastuolu seadus:}
+ \hl{
+   \[ 
+    \begin{align*}   
+     A \wedge \overline{A} = 0
+    \end{align*}
+   \] 
+ }
+ \leavevmode 
+
+ \textbf{6. Kontrapositsiooni seadus: }
+ \hl{
+   \[ 
+    \begin{align*}
+      A \rightarrow B = \overline{B} \rightarrow \overline{A}
+    \end{align*}
+   \]  
+ }
+
+ \newpage 
+  
+
+ \begin{question}{Milline oleks assotsiatiivsusseaduse verbaalne esitus?}
+ \end{question}
+
+\begin{question}{Milline oleks kommutatiivsusseaduse verbaalne esitus?}
+\end{question}
+
+\begin{question}{Milline binaarne loogikatehe pole kommutatiivne?}
+\end{question}
+
+\begin{question}{Millist avaldise teisendusvõimalust esitab distributiivsusseadus?}
+\end{question}
+
+\begin{question}{Millise loogikaväärtusega disjunktsioon ei muuda avaldise väärtust?}
+\end{question}
+
+\begin{question}{Millise loogikaväärtusega konjunktsioon ei muuda avaldise väärtust?}
+\end{question}
+
+\begin{question}{Milline on disjunktsiooni tulemus, kui vähemalt üks operandidest on loogikaväärtus 1?}
+\end{question}
+
+\begin{question}{Milline on konjunktsiooni tulemus, kui vähemalt üks operandidest on loogikaväärtus 0?}
+\end{question}
+
+\begin{question}{Mitme muutuja jaoks on DeMorgani seadused laiendatavad?}
+\end{question}
+
+\begin{question}{Milleks loogikaseadusi rakendatakse?}
+\end{question}
+
+\begin{question}{Millest hulk koosneb?}
+\end{question}
+
+\begin{question}{Kuidas hulka tavaliselt tähistatakse?}
+\end{question}
+
+\begin{question}{Millised hulga esitusviisid on olemas?}
+\end{question}
+
+\begin{question}{Millal on hulgad teineteisega võrdsed?}
+\end{question}
+
+\begin{question}{Kui palju (mitu tk.) võib ühte hulgaelementi hulgas sisalduda?}
+\end{question}
+
+\begin{question}{Milliste sümbolitega esitatakse elemendi kuulumist või mittekuulumist hulka?}
+\end{question}
+
+\begin{question}{Millal on mingi hulk teise hulga osahulgaks?}
+\end{question}
+
+\begin{question}{Millal on kaks hulka teineteise osahulkadeks?}
+\end{question}
+
+\begin{question}{Mis on Venni diagramm?}
+\end{question}
+
+\begin{question}{Milline on kahe hulga Venni diagramm? Kolme hulga Venni diagramm?}
+\end{question}
+
+\begin{question}{Milline on nelja hulga Venni diagramm?}
+\end{question}
+
+\begin{question}{Mis on universaalhulk?}
+\end{question}
+
+\begin{question}{Mis on hulga täiend?}
+\end{question}
+
+\begin{question}{Milline hulk on tühi hulk?}
+\end{question}
+
+\begin{question}{Millised hulgad on alati iga hulga osahulkadeks?}
+\end{question}
+
+\begin{question}{Millise hulga osahulgaks on iga hulk?}
+\end{question}
+
+\begin{question}{Mitu erinevat osahulka on n-elemendilisel hulgal?}
+\end{question}
+
+\begin{question}{Mis on hulga astmehulk?}
+\end{question}
+
+\begin{question}{Mitu elementi on n-elemendilise hulga astmehulgas?}
+\end{question}
+
+\begin{question}{Millist hulka nimetatakse lõplikuks hulgaks?}
+\end{question}
+
+\begin{question}{Millist hulka nimetatakse lõpmatuks hulgaks?}
+\end{question}
+
+\begin{question}{Millist hulka nimetatakse loenduvaks hulgaks?}
+\end{question}
+
+\begin{question}{Mis on "loendamine"?}
+\end{question}
+
+\begin{question}{Tuua näide lõpmatust loenduvast hulgast ja lõpmatust mitteloenduvast hulgast.}
+\end{question}
+
+\begin{question}{Millised hulgaaritmeetilised tehted on olemas? Millised on nende tehtemärgid?}
+\end{question}
+
+\begin{question}{Millised on unaarsed ja millised on binaarsed hulgaaritmeetilised tehted?}
+\end{question}
+
+\begin{question}{Millisele aritmeetilisele tehtele vastab iga konkreetne hulgaaritmeetiline tehe?}
+\end{question}
+
+\begin{question}{Millist tehet nimetatakse hulgaaritmeetiliseks korrutamiseks?}
+\end{question}
+
+\begin{question}{Millist tehet nimetatakse hulgaaritmeetiliseks liitmiseks?}
+\end{question}
+
+\begin{question}{Selgita, millised elemendid kuuluvad kahe hulga ühendisse?}
+\end{question}
+
+\begin{question}{Selgita, millised elemendid kuuluvad kahe hulga ühisosasse?}
+\end{question}
+
+\begin{question}{Millised hulgad on mittelõikuvad?}
+\end{question}
+
+\begin{question}{Mis on lõpliku hulga võimsus?}
+\end{question}
+
+\begin{question}{Mida väljendavad Grassmanni valemid?}
+\end{question}
+
+\begin{question}{Milliseid tehteid asendavad hulgaaritmeetilised asendusseosed?}
+\end{question}
+
+\begin{question}{Milline on hulgaaritmeetiliste tehete prioriteedijärjestus? Millal see oluliseks osutub?}
+\end{question}
+
+\begin{question}{Mille poolest erinevad teineteisega duaalsed hulgaavaldised?}
+\end{question}
+
+\begin{question}{Mis on hulgaavaldise Cantori normaalkuju?}
+\end{question}
+
+\begin{question}{Milline on Cantori minimaalne normaalkuju?}
+\end{question}
+
+\begin{question}{Milline on Cantori täielik normaalkuju?}
+\end{question}
+
+\begin{question}{Kuidas teisendatakse mittetäielik Cantori normaalkuju täielikuks?}
+\end{question}
+
+\begin{question}{Mis on hulkade ristkorrutis?}
+\end{question}
+
+\begin{question}{Kuidas esitatakse järjestatud paari?}
+\end{question}
+
+\begin{question}{Mis on hulkade otseruut?}
+\end{question}
+
+\begin{question}{Mis on korteež?}
+\end{question}
+
+\begin{question}{Kuidas on esitatav tasandi iga punkt?}
+\end{question}
+
+\begin{question}{Kuidas on esitatav ruumi iga punkt?}
+\end{question}
+
+\begin{question}{Milline on tuntuim mittepositsiooniline arvusüsteem?}
+\end{question}
+
+\begin{question}{Mis on positsioonilise arvusüsteemi alus? Mida ta määrab?}
+\end{question}
+
+\begin{question}{Mis on arvujärgu kaal? Kuidas on iga järgu kaal määratud?}
+\end{question}
+
+\begin{question}{Mida näitab koma?}
+\end{question}
+
+\begin{question}{Millised arvujärgud on kõrgemad järgud?}
+\end{question}
+
+\begin{question}{Millised arvujärgud on madalamad järgud?}
+\end{question}
+
+\begin{question}{Milline on täisosa madalaima järgu kaal suvalises arvusüsteemis?}
+\end{question}
+
+\begin{question}{Mitu erinevat järguväärtust võib olla arvusüsteemi igas järgus?}
+\end{question}
+
+\begin{question}{Mis on number? Mis on arv?}
+\end{question}
+
+\begin{question}{Kuidas avaldub arvu väärtus?}
+\end{question}
+
+\begin{question}{Millise numbri lisamine täisosa ette või murdosa lõppu ei muuda arvu väärtust?}
+\end{question}
+
+\begin{question}{Mis on arvu tüvenumbrid?}
+\end{question}
+
+\begin{question}{Millist teisendust nimetame ka arvu "väärtuse leidmiseks"?}
+\end{question}
+
+\begin{question}{Mida näitab arvu järel olev indeks?}
+\end{question}
+
+\begin{question}{Milline on lihtsaim võimalik arvusüsteem?}
+\end{question}
+
+\begin{question}{Kuidas on määratud arvujärkude kaalud kahendsüsteemis?}
+\end{question}
+
+\begin{question}{Kuidas toimub arvu teisendus mingisse teise arvusüsteemi?}
+\end{question}
+
+\begin{question}{Millised neli arvusüsteemi on kõige olulisemad?}
+\end{question}
+
+\begin{question}{Mis on oktaalarvud? Millisele arvusüsteemile viitab nimetus hex?}
+\end{question}
+
+\begin{question}{Kuidas tähistatakse kuueteistkümnendnumbreid väärtustega 10 11 12 13 14 15?}
+\end{question}
+
+\begin{question}{Milline on suurima alusega praktiliselt kasutatav arvusüsteem?}
+\end{question}
+
+\begin{question}{Milleks 16ndsüsteemi kõige enam kasutatakse?}
+\end{question}
+
+\begin{question}{Kuidas saab arve teisendada 2ndsüsteemi, 8ndsüsteemi ja 16ndsüsteemi vahel?}
+\end{question}
+
+\begin{question}{Millised arvud on naturaalarvud?}
+\end{question}
+
+\begin{question}{Millised arvud on algarvud?}
+\end{question}
+
+\begin{question}{Millised murdarvud on ratsionaalarvud?}
+\end{question}
+
+\begin{question}{Mis on kahendvektor? Mis on kahendvektori pikkus?}
+\end{question}
+
+\begin{question}{Millised erinevused on kahendvektoril ja kahendarvul?}
+\end{question}
+
+\begin{question}{Millised kahendvektorid on lähisvektorid?}
+\end{question}
+
+\begin{question}{Mitu erinevat lähisvektorit on n-järgulisel kahendvektoril?}
+\end{question}
+
+\begin{question}{Mis on intervall?}
+\end{question}
+
+\begin{question}{Millised järgud on intervalli olulised järgud?}
+\end{question}
+
+\begin{question}{Kuidas on intervalli suurus seotud tema mitteoluliste järkude arvuga?}
+\end{question}
+
+\begin{question}{Millest koosneb intervalli vektoresitus? Kuidas ta moodustatakse?}
+\end{question}
+
+\begin{question}{Mis on n-mõõtmeline Boole'i ruum?}
+\end{question}
+
+\begin{question}{Tuua näide võrreldavatest kahendvektoritest.}
+\end{question}
+
+\begin{question}{Tuua näide mittevõrreldavatest kahendvektoritest.}
+\end{question}
+
+\begin{question}{Kas erinevate pikkustega kahendvektorid võivad olla võrreldavad?}
+\end{question}
+
+\begin{question}{Mis on mooduli rakendamine täisarvule?}
+\end{question}
+
+\begin{question}{Millises väärtustevahemikus võib olla mooduli rakendamise tulemus?}
+\end{question}
+
+\end{enumerate}
+
+\end{document}
+

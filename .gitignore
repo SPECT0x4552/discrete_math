@@ -1,0 +1,25 @@
+# Ignore LaTeX build files
+*.aux
+*.log
+*.toc
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Ignore temporary files
+*.tmp
+*.bak
+
+# Ignore editor-specific files
+*.swp
+*.swo
+*.tmp
+*~
+._*
+
+# Ignore PDFs if they are built from the source
+*.pdf
+
