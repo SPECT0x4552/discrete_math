@@ -12,6 +12,7 @@
 \usepackage{bookmark}
 \usepackage{fontspec}
 \usepackage{titlesec}
+\usepackage{mathptmx}
 
 \setmainfont{TeX Gyre Pagella}
 
@@ -50,7 +51,7 @@
 
 % Custom Problem Environment
 \newenvironment{problem}[1][]{
-    \begin{enumerate}[label=\textbf{Problem \arabic*.}, ref=#1, leftmargin=*, topsep=0.5em]
+    \begin{enumerate}[label=\textbf{Harjutus \arabic*.}, ref=#1, leftmargin=*, topsep=0.5em]
 }{\end{enumerate}}
 
 % Custom Solution Environment
@@ -138,20 +139,75 @@ lausete tõeväärtused: \\
 
 \newpage
 
-\section{Set Theory}
-\begin{definition}[Set]
-A set is a collection of distinct objects.
+\section{Hulgad}
+\begin{definition}[Hulk]
+	Mõistel \textit{hulk} ei ole definitsiooni - \textbf{hulk} on baasmõiste. \\ 
+	Hulk koosneb \textbf{hulgaeelementidest}. \\ 
+	\\ 
+	Hulka esitatakse suurtähtedega $\mathbf{A}, \mathbf{B}, \mathbf{C}$ 
+	\\ 
+	\\ 
+	Hulga elementide täielikku loetelu esitatakse loogsulgude vahel : 
+	\textbf{\{a e i o ä ü õ\}} \\ (elementide vahel võivad olla ka komad) 
+	\\ 
+	\\ 
+	Hulka võib esitada ka tema elementide osalise loeteluna, mis esitab mingit regulaarset 
+	\\ äratuntavat seaduspära:
+	\textbf{\{ ... -2, -1, 0, 1, 2 ... \}}
+	\\ 
+	\\ 
+	Lisaks võib hulka esitada ka üldise avaldise kaudu, mis kehtib \textbf{kõigi} hulgaeelementide jaoks: \\
+\\ $\mathbf{\{n \ | \ (n > 1899) \wedge (n < 2000)\}}$ \\ 
+  \\ 
+	$\mathbf{\{ x \ | \ mod \ 2 = 1 \}}$
+	\\ 
+	\\ 
+	$\mathbf{\{ x \ | \ mod \ 2 = 0 \}}$
+  \\ 
+	\\ 
+	Hulka kuulumise (ja mittekuulumise) ning osahulgaks olemise (ja mitteolemise) avaldised \\ 
+	omandavad ka tõeväärtuse(d).
+	\\ 
+	\\ 
+	$\overline{A}$ - hulga täiend \\ 
+	$A \cup B$ - hulkade ühend ehk hulkade liitmine  \\ 
+	$A \cap B$ - hulkade ühisosa ehk hulkade korrutamine \\ 
+	$A \setminus B$ - hulkade \textbf{vahe} ehk hulkade lahtumine (A ilma B-ta või A on lahutatud hulk B) \\
+	$A \ \Delta \ B$ - hulkade sümmeetriline vahe \\ 
+	$0$ - tühi hulk $\varnothing$ \\ 
+	$1$ - universaalhulk $\mathbf{{I}}$
 \end{definition}
 
-\begin{problem}
-\item Let \( A = \set{1, 2, 3} \) and \( B = \set{2, 3, 4} \). Find \( A \cup B \) and \( A \cap B \).
+\begin{problem} 
+	\item On antud hulgad $\mathbf{A} = \{ a \ b \ c \ d \ e \}$ ja $\mathbf{B} = \{ a \ b \ c \ d \ e \ f \ g \ h \}$ \\ \\ 
+		Leida \ $\mathbf{A \cup B}$ \ \ \ $\mathbf{A \cap B}$ \ \ \ $\mathbf{A \backslash B}$ \ \ \ $\mathbf{B \backslash A}$ \ \ \ $\mathbf{A} \ \Delta \ \mathbf{B}$
 \end{problem}
-
 \begin{solution}
-\[
-A \cup B = \set{1, 2, 3, 4}, \quad A \cap B = \set{2, 3}
+	\[
+		\mathbf{A} \cup \mathbf{B} = {\{ \ a \ b \ c \ d \ e \ f \ g \ h \ \}} = \mathbf{B}
+\] 
+\[ 
+	\mathbf{A} \cap \mathbf{B} = {\{ a \ b \ c \ d \ e \}}
 \]
+\[ 
+	\mathbf{A} \backslash \mathbf{B} = {}
+\]
+\[ 
+	\mathbf{B} \setminus \mathbf{A} = \{f \ g \ h \}
+\]
+\[ 
+	\mathbf{A} \ \Delta \ \mathbf{B} = \mathbf{B} \setminus \mathbf{A}
+\]
+\\
+\textit{Viimast saab järeldada ka \textbf{asendusseose} abil}:  
+\[ 
+	\mathbf{A} \ \Delta \ \mathbf{B} = (\mathbf{A} \setminus \mathbf{B}) \cup (\mathbf{B} \setminus \mathbf{A}) = \varnothing \cup (\mathbf{B} \setminus \mathbf{A}) = \mathbf{B} \setminus \mathbf{A}
+\] 
+
 \end{solution}
+
+\[
+\]
 \newpage
 \section{Graph Theory}
 \begin{definition}[Graph]
